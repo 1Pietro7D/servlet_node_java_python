@@ -1,0 +1,20 @@
+<!-- src/main/resources/templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invia un Messaggio</title>
+</head>
+<body>
+    <h1>Invia un Messaggio</h1>
+    <form action="/send" method="post">
+        <input type="text" name="message" placeholder="Inserisci il tuo messaggio" required>
+        <select name="target">
+            <option value="node">Server Node.js</option>
+            <option value="python">Server Python</option>
+            <option value="all">Tutti i Server</option>
+        </select>
+        <button type="submit">Invia</button>
+    </form>
+    <p th:text="${status}"></p>
+</body>
+</html>
