@@ -1,0 +1,19 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invia un Messaggio</title>
+</head>
+<body>
+    <h1>Invia un Messaggio</h1>
+    <form action="/send" method="post">
+        <input type="text" name="message" placeholder="Inserisci il tuo messaggio" required>
+        <select name="target">
+            <option value="node">Server Node.js</option>
+            <option value="java">Server Java</option>
+            <option value="all">Tutti i Server</option>
+        </select>
+        <button type="submit">Invia</button>
+    </form>
+</body>
+</html>
