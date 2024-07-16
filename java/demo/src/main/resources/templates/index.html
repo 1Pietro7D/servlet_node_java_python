@@ -22,5 +22,9 @@
             <span th:text="${message.from}">Mittente</span>: <span th:text="${message.message}">Messaggio</span>
         </li>
     </ul>
+    <!-- Area to display responses from the WebSocket server -->
+    <pre id="response"></pre>
+
+    <script src="socket.js"></script>
 </body>
 </html>
