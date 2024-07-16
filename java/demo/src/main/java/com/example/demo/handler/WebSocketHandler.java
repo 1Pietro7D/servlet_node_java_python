@@ -1,15 +1,20 @@
 package com.example.demo.handler;
 
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+
 /**
  * WebSocket handler to manage text messages sent and received over WebSocket connections.
  */
-public class WebSocketHandler extends TextWebSocketHandler {
 
+public class WebSocketHandler extends TextWebSocketHandler {
+    private SessionsSocket sessionsSocket = SessionsSocket.getInstance();
+    //  @Autowired
+    //      SessionsSocket sessionsSocket;
     /**
      * Called after a new WebSocket connection is established.
      *
@@ -18,8 +23,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
      */
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        // Log connection establishment with session ID.
-        System.out.println("Connected: " + session.getId());
+        sessionsSocket.addSession(session);
     }
 
     /**
@@ -30,12 +34,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
      * @throws Exception if an error occurs.
      */
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        // Log the received message payload.
-        System.out.println("Received message: " + message.getPayload());
-
-        // Send a response message to the client.
-        session.sendMessage(new TextMessage("Hello, " + message.getPayload() + "!"));
+    public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+        session.sendMessage(new TextMessage("Ciao al momento questo canale è fuori uso, cerca di mandare il messaggio attraverso una richesta http post su /send o /java"));
     }
 
     /**
@@ -47,7 +47,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
      */
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        // Log connection closure with session ID and close status.
-        System.out.println("Disconnected: " + session.getId());
+        sessionsSocket.removeSession(session);
     }
 }
