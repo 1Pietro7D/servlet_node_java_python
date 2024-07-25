@@ -16,5 +16,33 @@
         </select>
         <button type="submit">Send</button>
     </form>
+    <h1>Messaggi della Chat</h1>
+    <div id="messages-container"></div>
+
+    <script>
+        
+        async function fetchChatMessages() {
+            try {
+                const response = await fetch('http://localhost:5001/chat');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                const messages = await response.json();
+
+                const container = document.getElementById('messages-container');
+                messages.forEach(msg => {
+                    const messageElement = document.createElement('div');
+                    messageElement.innerHTML = `<strong>${msg.from}:</strong> ${msg.message}`;
+                    container.appendChild(messageElement);
+                });
+            } catch (error) {
+                console.error('Fetch error:', error);
+                const container = document.getElementById('messages-container');
+                container.innerHTML = `<p>Errore nel recupero dei messaggi: ${error.message}</p>`;
+            }
+        }
+
+        window.onload = fetchChatMessages;
+    </script>
 </body>
 </html>
